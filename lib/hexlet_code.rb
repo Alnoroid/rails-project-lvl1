@@ -4,5 +4,27 @@ require_relative "hexlet_code/version"
 
 module HexletCode
   class Error < StandardError; end
-  # Your code goes here...
+
+  # Tag builder
+  class Tag
+    def self.build(tag, *attributes)
+      single_tags = %w[area base br col embed hr img input keygen link meta param
+                       source track wbr]
+      result_attr = attr_builder(attributes)
+
+      if single_tags.include? tag
+        "<#{tag}#{result_attr}>"
+      else
+        "<#{tag}#{result_attr}>#{yield if block_given?}</#{tag}>"
+      end
+    end
+
+    def self.attr_builder(attributes)
+      result_attr = ""
+      attributes.each do |attr|
+        result_attr += " #{attr.map { |k, v| "#{k}=\"#{v}\"" }.join(" ")}"
+      end
+      result_attr
+    end
+  end
 end

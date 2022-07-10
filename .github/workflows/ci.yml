@@ -18,5 +18,8 @@ jobs:
         with:
           ruby-version: 3.0.x
 
+      - name: Install dependencies
+        run: make install
+
       - name: Run Rubocop
         run: make lint

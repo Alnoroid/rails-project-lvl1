@@ -1,4 +1,4 @@
-install: 
+install:
 	bundle install
 
 lint:
@@ -8,4 +8,4 @@ lint-fix:
 	bundle exec rubocop -A
 
 run-test:
-    rspec spec
+	rspec spec

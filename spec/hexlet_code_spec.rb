@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe HexletCode do
-  # it "has a version number" do
-  #   expect(HexletCode::VERSION).not_to be nil
-  # end
+User = Struct.new(:name, :job, keyword_init: true)
 
+RSpec.describe HexletCode do
   context "tag generator" do
     it "should return single tag" do
       expect(HexletCode::Tag.build("br")).to match("<br>")
@@ -29,6 +27,22 @@ RSpec.describe HexletCode do
 
     it "should return multiple tag" do
       expect(HexletCode::Tag.build("div")).to match("<div></div>")
+    end
+  end
+
+  before(:all) do
+    @user = User.new name: "rob"
+  end
+
+  context "form" do
+    it "should generate form" do
+      form = HexletCode.form_for(@user)
+      expect(form).to match('<form action="#" method="post"></form>')
+    end
+
+    it "should generate form with url" do
+      form = HexletCode.form_for(@user, url: "/users")
+      expect(form).to match('<form action="/users" method="post"></form>')
     end
   end
 end
